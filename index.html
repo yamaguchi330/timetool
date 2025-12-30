@@ -58,7 +58,7 @@
         }
 
         .result-value {
-            font-size: 1.5rem;
+            font-size: 2rem;
             font-weight: bold;
             color: #4a00e0;
             margin: 5px 0 15px;
@@ -103,9 +103,9 @@
             if (diffHours > 0) {
                 resultDisplay.innerHTML = `<span>${diffHours}</span> 時間`;
             } else if (diffHours === 0 && diffMs > 0) {
-                resultDisplay.innerHTML = `1時間未満`;
+                resultDisplay.innerHTML = `1時間未満です`;
             } else {
-                resultDisplay.innerHTML = `到達済み`;
+                resultDisplay.innerHTML = `終了しました`;
             }
         }
 
