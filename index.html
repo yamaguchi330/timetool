@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Time Offset Calculator</title>
+    <style>
+        /* CSSグラデーションの上に画像を重ねる（冒頭の質問の応用） */
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background:
+                linear-gradient(135deg, rgba(102, 126, 234, 0.8), rgba(118, 75, 162, 0.8));
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        input {
+            display: block;
+            width: 100%;
+            max-width: 380px;
+            margin: 10px auto;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+
+        label {
+            display: block;
+            text-align: center;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #444;
+        }
+
+        .result-label {
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 20px;
+        }
+
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #4a00e0;
+            margin: 15px 0;
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+        }
+
+        .result-value span {
+            font-size: 4rem;
+            line-height: 1;
+            letter-spacing: 0.05em;
+            margin-right: 2px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="card">
+        <h2>STG日時計算</h2>
+        <label>ターゲット日時 (STG表示日時)</label>
+        <input type="datetime-local" id="targetDate" value="2026-01-01T16:00">
+
+        <div class="result-label">現在からの加算時間</div>
+        <div id="result" class="result-value">--</div>
+        <div style="font-size: 0.8rem; color: #999;">※自動計算されます</div>
+    </div>
+
+    <script>
+        const targetInput = document.getElementById('targetDate');
+        const resultDisplay = document.getElementById('result');
+
+        function calculate() {
+            const target = new Date(targetInput.value);
+            const now = new Date();
+            const diffMs = target - now;
+
+            // 四捨五入して整数に
+            const diffHours = Math.round(diffMs / (1000 * 60 * 60));
+
+            if (diffHours > 0) {
+                // 数字を span タグで囲んで表示
+                resultDisplay.innerHTML = `<span>${diffHours}</span> 時間`;
+            } else if (diffHours === 0 && diffMs > 0) {
+                resultDisplay.innerHTML = `1時間未満`;
+            } else {
+                resultDisplay.innerHTML = `到達済み`;
+            }
+        }
+
+        targetInput.addEventListener('input', calculate);
+        setInterval(calculate, 60000); // 1分ごとに更新
+        calculate();    
+    </script>
+
+</body>
+
+</html>
