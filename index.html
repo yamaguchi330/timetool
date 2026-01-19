@@ -2,16 +2,16 @@
 <html lang="ja">
 
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-FSM5LTW3HL"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FSM5LTW3HL"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
 
-  gtag('config', 'G-FSM5LTW3HL');
-</script>
+        gtag('config', 'G-FSM5LTW3HL');
+    </script>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>加算時間計算ツール</title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <style>
@@ -23,46 +23,92 @@
             justify-content: center;
             font-family: 'Helvetica Neue', Arial, sans-serif;
             background: linear-gradient(130deg, rgba(108, 204, 134, 1) 0%, rgba(60, 189, 161, 1) 100%);
-            caret-color: transparent;
+            user-select: none;
         }
 
         .card {
-            width: 420px;
-            padding: 2rem;
+            width: 500px;
+            padding: 2.5rem 1.5rem;
             border-radius: 20px;
             text-align: center;
             backdrop-filter: blur(10px);
             background: rgba(255, 255, 255, 0.9);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            box-sizing: border-box;
         }
 
         h2 {
-            margin: 10px 0 25px;
+            margin: 0 0 25px;
             color: #222;
+        }
+
+        .input-wrapper {
+            position: relative;
+            width: 80%;
+            margin: 10px auto;
         }
 
         input {
             display: block;
-            width: 80%;
-            margin: 10px auto;
-            padding: 12px;
+            width: 100%;
+            padding: 12px 45px 12px 12px;
             font-size: 1rem;
             border: 1px solid #ddd;
             border-radius: 8px;
             box-sizing: border-box;
+            appearance: none;
+            -webkit-appearance: none;
+            cursor: pointer;
+            background: #fff;
+        }
+
+        input::-webkit-calendar-picker-indicator {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .calendar-icon {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(130deg, rgba(60, 189, 161, 1) 0%, rgba(108, 204, 134, 1) 100%);
+            border-radius: 5px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
+
+        .calendar-icon::before {
+            content: "";
+            width: 18px;
+            height: 18px;
+            background-color: white;
+            -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg>') no-repeat center;
+            mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg>') no-repeat center;
+            -webkit-mask-size: contain;
+            mask-size: contain;
         }
 
         label {
             display: block;
-            text-align: center;
-            margin-bottom: 5px;
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-weight: bold;
             color: #444;
         }
 
         .result-label {
-            margin-top: 30px;
+            margin: 30px 0 0;
             font-size: 0.9rem;
             color: #666;
         }
@@ -70,28 +116,64 @@
         .result-value {
             display: flex;
             justify-content: center;
-            align-items: center;
-            margin: 0 0 10px;
+            align-items: baseline;
+            margin: 5px 0 10px;
             min-height: 80px;
             font-size: 2rem;
             font-weight: bold;
-            line-height: 1;
             color: #009058;
         }
 
         .result-value .hour {
-            margin-right: 5px;
-            font-size: 4rem;
+            font-size: 4.2rem;
             letter-spacing: 0.05em;
+            line-height: 1;
         }
 
         .result-value .time {
-            margin-top: 15px;
+            margin-left: 4px;
+            transform: translateY(-5px);
+            font-size: 1.7rem;
         }
 
         .status-msg {
-            font-size: 2rem;
+            align-self: center;
+            font-size: 1.8rem;
             color: #666;
+        }
+
+        .notice {
+            margin: 10px 0 0;
+            font-size: 0.8rem;
+            color: #999;
+        }
+
+        @media screen and (max-width: 480px) {
+            .card {
+                width: 92%;
+                padding: 2.5rem 1.5rem;
+            }
+
+            h2 {
+                font-size: 1.2rem;
+            }
+
+            .input-wrapper {
+                width: 100%;
+            }
+
+            input {
+                width: 100%;
+            }
+
+            .calendar-icon {
+                width: 32px;
+                height: 32px;
+            }
+
+            .status-msg {
+                font-size: 1.4rem;
+            }
         }
     </style>
 </head>
@@ -100,12 +182,18 @@
 
     <div class="card">
         <h2>システム日時加算時間</h2>
-        <label for="targetDate">ステージング環境で表示確認する日時</label>
-        <input type="datetime-local" id="targetDate" value="">
-
-        <div class="result-label">現在からの加算時間</div>
-        <div id="result" class="result-value">日時を入れてください</div>
-        <div style="font-size: 0.8rem; color: #999;">※1分毎に自動計算されます</div>
+        <div class="input-group">
+            <label for="targetDate">ステージング環境で表示確認する日時</label>
+            <div class="input-wrapper">
+                <input type="datetime-local" id="targetDate" value="">
+                <span class="calendar-icon"></span>
+            </div>
+        </div>
+        <div class="result-container">
+            <p class="result-label">現在からの加算時間</p>
+            <div id="result" class="result-value" aria-live="polite">日時を入れてください</div>
+            <p class="notice">※1分毎に自動計算されます</p>
+        </div>
     </div>
 
     <script>
@@ -126,7 +214,7 @@
 
             if (diffMs > 0) {
                 if (diffHours >= 1) {
-                    resultDisplay.innerHTML = `<span class="hour">${diffHours}</span><span class="time">時間</span`;
+                    resultDisplay.innerHTML = `<span class="hour">${diffHours}</span><span class="time">時間</span>`;
                 } else {
                     resultDisplay.innerHTML = `1時間未満です`;
                 }
@@ -136,6 +224,8 @@
         }
 
         targetInput.addEventListener('input', calculate);
+        targetInput.addEventListener('change', calculate);
+
         setInterval(calculate, 60000);
         calculate();
     </script>
