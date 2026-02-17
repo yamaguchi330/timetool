@@ -217,7 +217,10 @@
             const now = new Date();
             const diffMs = target - now;
 
-            const diffHours = Math.round(diffMs / (1000 * 60 * 60));
+            // 修正前（四捨五入）
+            // const diffHours = Math.round(diffMs / (1000 * 60 * 60));
+            // 修正後（切り捨て）
+            const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
 
             if (diffMs > 0) {
                 if (diffHours >= 1) {
